@@ -53,7 +53,6 @@ public class AspectManager extends JsonDataLoader implements IdentifiableResourc
             Aspect.CODEC.parse(JsonOps.INSTANCE, json)
                     .resultOrPartial(error -> AspectsLib.LOGGER.error("Failed to parse aspect data {}: {}", id, error))
                     .ifPresent(aspect -> {
-                        // Simply add to our map - no registry shenanigans!
                         ModRegistries.ASPECTS.put(id, aspect);
                         NAME_TO_ID.put(aspect.name(), id);
                         loadedCount.getAndIncrement();

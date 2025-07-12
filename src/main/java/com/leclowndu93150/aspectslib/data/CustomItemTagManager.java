@@ -64,16 +64,13 @@ public class CustomItemTagManager extends JsonDataLoader implements Identifiable
                                     Codecs.TagEntryId tagEntry = id.result().get();
                                     Identifier itemId = tagEntry.id();
                                     AspectsLib.LOGGER.debug("Processing entry: {} (tag: {})", itemId, tagEntry.tag());
-                                    
-                                    // Process both direct items AND tag references (matching 1.21.1 behavior)
-                                    // The actual tag resolution happens at runtime in the items mixin
+
                                     
                                     if (jsonItemObject.has("aspects")) {
                                         Object2IntOpenHashMap<Identifier> aspectAmount = new Object2IntOpenHashMap<>();
                                         JsonObject jsonAspectObject = jsonItemObject.getAsJsonObject("aspects");
                                         for (String aspectID : jsonAspectObject.asMap().keySet()) {
                                             Identifier aspectIdentifier = new Identifier(aspectID);
-                                            // Check if aspect exists in our map
                                             if (ModRegistries.ASPECTS.containsKey(aspectIdentifier)) {
                                                 int amount = JsonHelper.getInt(jsonAspectObject, aspectID);
                                                 aspectAmount.put(aspectIdentifier, amount);

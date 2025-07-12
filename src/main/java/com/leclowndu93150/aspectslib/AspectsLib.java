@@ -1,18 +1,12 @@
 package com.leclowndu93150.aspectslib;
 
-import com.leclowndu93150.aspectslib.data.Aspect;
 import com.leclowndu93150.aspectslib.data.AspectManager;
 import com.leclowndu93150.aspectslib.data.CustomItemTagManager;
 import com.leclowndu93150.aspectslib.data.ModRegistries;
 import com.leclowndu93150.aspectslib.networking.SyncAspectIdentifierPacket;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryLoader;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -30,14 +24,8 @@ public class AspectsLib implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        ModRegistries.register();
-
-        ServerPlayNetworking.registerGlobalReceiver(SyncAspectIdentifierPacket.ID, (server, player, handler, buf, responseSender) -> {
-            // Handle client-side packet if needed
-        });
 
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
-            // Send full aspect data to clients when they join or datapacks reload
             try {
                 SyncAspectIdentifierPacket.sendAllData(player);
                 AspectsLib.LOGGER.debug("Sent aspect data to player: {}", player.getName().getString());

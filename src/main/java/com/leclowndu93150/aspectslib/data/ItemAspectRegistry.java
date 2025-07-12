@@ -19,13 +19,12 @@ public class ItemAspectRegistry {
     /**
      * Registers a new association between an `Identifier` and an `AspectData`.
      *
-     * @param id     The `Identifier` of the item to which the aspect will be applied.
-     * @param aspect The `AspectData` to associate with the item.
+     * @param id     The `Identifier` of the items to which the aspect will be applied.
+     * @param aspect The `AspectData` to associate with the items.
      * @return The registered `AspectData`.
      */
     public static AspectData register(Identifier id, AspectData aspect) {
         if(idToAspect.containsKey(id)) {
-            // Merge with existing aspects
             AspectData existing = idToAspect.get(id);
             existing.addAspect(aspect);
             return aspect;
@@ -38,8 +37,8 @@ public class ItemAspectRegistry {
      * Updates an existing association between an `Identifier` and an `AspectData`. If the `Identifier` is already
      * registered, the old `AspectData` is removed and replaced with the new one.
      *
-     * @param id     The `Identifier` of the item to update.
-     * @param aspect The new `AspectData` to associate with the item.
+     * @param id     The `Identifier` of the items to update.
+     * @param aspect The new `AspectData` to associate with the items.
      */
     protected static void update(Identifier id, AspectData aspect) {
         if(idToAspect.containsKey(id)) {
@@ -52,14 +51,14 @@ public class ItemAspectRegistry {
     /**
      * Removes the association for the specified `Identifier`.
      *
-     * @param id The `Identifier` of the item to remove from the registry.
+     * @param id The `Identifier` of the items to remove from the registry.
      */
     protected static void remove(Identifier id) {
         idToAspect.remove(id);
     }
 
     /**
-     * Returns the number of registered item-aspect associations.
+     * Returns the number of registered items-aspect associations.
      *
      * @return The number of entries in the registry.
      */
@@ -97,7 +96,7 @@ public class ItemAspectRegistry {
     /**
      * Retrieves the `AspectData` associated with the specified `Identifier`.
      *
-     * @param id The `Identifier` of the item to look up.
+     * @param id The `Identifier` of the items to look up.
      * @return The associated `AspectData`, or DEFAULT if not found.
      */
     public static AspectData get(Identifier id) {

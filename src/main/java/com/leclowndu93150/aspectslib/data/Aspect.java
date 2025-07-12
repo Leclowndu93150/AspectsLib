@@ -76,7 +76,7 @@ public record Aspect(String name, Identifier textureLocation) {
     }
 
     /**
-     * This method constructs a translation key based on the identifier of the item, or the name of the aspect.
+     * This method constructs a translation key based on the identifier of the items, or the name of the aspect.
      *
      * @return a string translation key to be used in Text#translatable(String key).
      */

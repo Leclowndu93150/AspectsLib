@@ -73,8 +73,8 @@ public class AspectsAPI {
     }
 
     /**
-     * Registers default aspects for an item
-     * @param item The item to register aspects for
+     * Registers default aspects for an items
+     * @param item The items to register aspects for
      * @param aspectId The identifier of the aspect
      * @param amount The default amount
      */
@@ -90,8 +90,8 @@ public class AspectsAPI {
     }
 
     /**
-     * Registers default aspects for an item by name
-     * @param item The item to register aspects for
+     * Registers default aspects for an items by name
+     * @param item The items to register aspects for
      * @param aspectName The name of the aspect
      * @param amount The default amount
      */

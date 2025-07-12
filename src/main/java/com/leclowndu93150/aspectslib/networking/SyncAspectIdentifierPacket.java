@@ -78,32 +78,6 @@ public class SyncAspectIdentifierPacket {
     }
 
     /**
-     * Reads both the name mapping and aspect data from the buffer
-     */
-    public static void readFullData(PacketByteBuf buf) {
-        Map<String, Identifier> nameMap = readNameMap(buf);
-        Map<Identifier, Aspect> aspectMap = readAspectData(buf);
-        
-        // Update client-side data
-        AspectManager.NAME_TO_ID.clear();
-        AspectManager.NAME_TO_ID.putAll(nameMap);
-        
-        ModRegistries.ASPECTS.clear();
-        ModRegistries.ASPECTS.putAll(aspectMap);
-        
-        AspectsLib.LOGGER.info("Synced {} aspects from server", aspectMap.size());
-    }
-
-    /**
-     * Legacy method - sends just the name mapping 
-     */
-    public static void sendMap(ServerPlayerEntity player, Map<String, Identifier> map) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        writeNameMap(buf, map);
-        ServerPlayNetworking.send(player, ID, buf);
-    }
-
-    /**
      * Sends the full aspect data (names + aspects) from server to client
      */
     public static void sendFullData(ServerPlayerEntity player, Map<String, Identifier> nameMap, Map<Identifier, Aspect> aspectMap) {
@@ -119,16 +93,5 @@ public class SyncAspectIdentifierPacket {
         AspectsLib.LOGGER.debug("Sending {} aspects and {} name mappings to client", 
                 ModRegistries.ASPECTS.size(), AspectManager.NAME_TO_ID.size());
         sendFullData(player, AspectManager.NAME_TO_ID, ModRegistries.ASPECTS);
-    }
-
-    // Legacy methods for backward compatibility
-    public static PacketByteBuf toBuffer(Map<String, Identifier> map) {
-        PacketByteBuf buf = PacketByteBufs.create();
-        writeNameMap(buf, map);
-        return buf;
-    }
-
-    public static Map<String, Identifier> fromBuffer(PacketByteBuf buf) {
-        return readNameMap(buf);
     }
 }

@@ -33,7 +33,7 @@ public class CustomItemTagManager extends JsonDataLoader implements Identifiable
     }
 
     /**
-     *  This method will look into the aspectslib:aspects item tag, and look for any objects that match the aspect
+     *  This method will look into the aspectslib:aspects items tag, and look for any objects that match the aspect
      *  json object, adding the correct data to the ItemAspectRegistry.
      */
     @Override
@@ -45,9 +45,9 @@ public class CustomItemTagManager extends JsonDataLoader implements Identifiable
             return;
         }
 
-        AspectsLib.LOGGER.info("Processing {} item tag files", prepared.size());
+        AspectsLib.LOGGER.info("Processing {} items tag files", prepared.size());
         prepared.forEach((identifier, jsonElement) -> {
-            AspectsLib.LOGGER.debug("Processing item tag: {}", identifier);
+            AspectsLib.LOGGER.debug("Processing items tag: {}", identifier);
             if (identifier.equals(AspectsLib.identifier("aspects"))) {
                 AspectsLib.LOGGER.info("Found aspects tag file, processing...");
                 if (jsonElement instanceof JsonObject jsonObject) {
@@ -66,7 +66,7 @@ public class CustomItemTagManager extends JsonDataLoader implements Identifiable
                                     AspectsLib.LOGGER.debug("Processing entry: {} (tag: {})", itemId, tagEntry.tag());
                                     
                                     // Process both direct items AND tag references (matching 1.21.1 behavior)
-                                    // The actual tag resolution happens at runtime in the item mixin
+                                    // The actual tag resolution happens at runtime in the items mixin
                                     
                                     if (jsonItemObject.has("aspects")) {
                                         Object2IntOpenHashMap<Identifier> aspectAmount = new Object2IntOpenHashMap<>();
@@ -77,7 +77,7 @@ public class CustomItemTagManager extends JsonDataLoader implements Identifiable
                                             if (ModRegistries.ASPECTS.containsKey(aspectIdentifier)) {
                                                 int amount = JsonHelper.getInt(jsonAspectObject, aspectID);
                                                 aspectAmount.put(aspectIdentifier, amount);
-                                                AspectsLib.LOGGER.debug("Added aspect {} with amount {} to item {}", aspectID, amount, itemId);
+                                                AspectsLib.LOGGER.debug("Added aspect {} with amount {} to items {}", aspectID, amount, itemId);
                                             } else {
                                                 AspectsLib.LOGGER.warn("Could not find aspect: {}", aspectID);
                                             }
@@ -85,11 +85,11 @@ public class CustomItemTagManager extends JsonDataLoader implements Identifiable
                                         
                                         if (!aspectAmount.isEmpty()) {
                                             ItemAspectRegistry.register(itemId, new AspectData(aspectAmount));
-                                            AspectsLib.LOGGER.debug("Registered {} aspects for item: {}", aspectAmount.size(), itemId);
+                                            AspectsLib.LOGGER.debug("Registered {} aspects for items: {}", aspectAmount.size(), itemId);
                                         }
                                     }
                                 } else {
-                                    AspectsLib.LOGGER.warn("Failed to parse item ID from: {}", jsonItemObject.get("id"));
+                                    AspectsLib.LOGGER.warn("Failed to parse items ID from: {}", jsonItemObject.get("id"));
                                 }
                             }
                         }
@@ -99,7 +99,7 @@ public class CustomItemTagManager extends JsonDataLoader implements Identifiable
                 }
             }
         });
-        AspectsLib.LOGGER.info("Finished loading aspects from item tags. Registry contains {} item aspects.", ItemAspectRegistry.size());
+        AspectsLib.LOGGER.info("Finished loading aspects from items tags. Registry contains {} items aspects.", ItemAspectRegistry.size());
     }
 
     @Override

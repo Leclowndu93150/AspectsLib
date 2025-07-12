@@ -52,7 +52,6 @@ public abstract class ItemStackMixin implements IAspectDataProvider {
         aspectslib$cachedAspectData = data;
         aspectslib$aspectDataInitialized = true;
 
-        // Save to NBT
         if (data != null && !data.isEmpty()) {
             NbtCompound nbt = getOrCreateNbt();
             nbt.put("AspectsLibData", data.toNbt());
@@ -84,7 +83,6 @@ public abstract class ItemStackMixin implements IAspectDataProvider {
             Identifier id = entry.getKey();
             AspectData itemAspectData = entry.getValue();
 
-            // Check both direct item match AND tag membership (matching 1.21.1 behavior)
             if (itemId.equals(id)) {
                 aspectData = aspectData.addAspect(itemAspectData);
             }

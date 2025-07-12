@@ -15,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(TooltipComponent.class)
 public interface TooltipComponentFactoryMixin {
 
+    // THIS MIXIN IS NOT CALLED, IT IS REPLACED BY THE EVENT
+
     @Inject(method = "of(Lnet/minecraft/client/item/TooltipData;)Lnet/minecraft/client/gui/tooltip/TooltipComponent;", at = @At("HEAD"), cancellable = true)
     private static void injectAspectTooltipComponent(TooltipData data, CallbackInfoReturnable<TooltipComponent> cir) {
         if (data instanceof AspectTooltipData aspectData) {

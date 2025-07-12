@@ -19,7 +19,6 @@ public class AspectsLibClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        // Register tooltip component
         TooltipComponentCallback.EVENT.register(data -> {
             if (data instanceof AspectTooltipData aspectTooltipData) {
                 return new AspectTooltipComponent(aspectTooltipData);
@@ -27,23 +26,18 @@ public class AspectsLibClient implements ClientModInitializer {
             return null;
         });
 
-        // Register client-side packet handler for aspect sync
         ClientPlayNetworking.registerGlobalReceiver(SyncAspectIdentifierPacket.ID, (client, handler, buf, responseSender) -> {
             try {
-                // Try to read as full data format first (includes both name map and aspect data)
                 Map<String, Identifier> nameMap = SyncAspectIdentifierPacket.readNameMap(buf);
                 Map<Identifier, Aspect> aspectMap;
-                
-                // Check if there's more data to read (full format)
+
                 if (buf.readableBytes() > 0) {
                     aspectMap = SyncAspectIdentifierPacket.readAspectData(buf);
                 } else {
-                    // Legacy format - only name mapping
                     aspectMap = new HashMap<>();
                     AspectsLib.LOGGER.warn("Received legacy packet format - only name mapping synced");
                 }
-                
-                // Apply the data on the main thread
+
                 final Map<String, Identifier> finalNameMap = nameMap;
                 final Map<Identifier, Aspect> finalAspectMap = aspectMap;
                 
